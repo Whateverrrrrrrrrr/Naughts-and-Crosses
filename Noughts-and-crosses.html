@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Naughts and Crosses</title>
+<link rel="icon" href="Icon.png" type="image/png">
+<style>
+    table, th, td {
+        border: 1px solid #8a8a8a;
+        text-align: center;
+    }
+    table {
+        margin-top: 75px;
+        table-layout: fixed;
+        width: 600px;
+        height: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    tr {
+        background-color: #858585;
+        width: 200px;
+        height: 200px;
+        font-family: "Arial";
+        font-size: 150px;
+        color: #0ca73f;
+    }
+    h2 {
+        margin-top: 75px;
+    }
+    p {
+        font-size: 30px;
+    }
+    h2, p {
+        text-align: center;
+        font-family: "Lucida Console", monospace;
+        color: #0ca73f;
+    }
+    div {
+        display: none;
+        text-align: center;
+        font-family: "Lucida Console", monospace;
+        background-color: #0ca73f;
+        color: #232423;
+        margin-left: 900px;
+        margin-right: 900px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    body {
+        background-color: #232423;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+<script>
+$(document).ready(function(){
+    var xNext = true;
+    var tableValues = new Array(9);
+    var gameOver = false;
+    var winner;
+     $("th").click(function(){
+        if ($(this).text().trim() == "" && gameOver == false) {
+            if (xNext == true) {
+                tableValues[parseInt($(this).attr("id"))] = "X";
+                $(this).text("X");
+                xNext = false;
+            } else {
+                tableValues[parseInt($(this).attr("id"))] = "O";
+                $(this).text("O");
+                xNext = true;
+            }
+            if (tableValues[0] == tableValues[1] && tableValues[0] == tableValues[2] && tableValues[0] != null) {
+                $("#0").css({"background-color": "#464444"});
+                $("#1").css({"background-color": "#464444"});
+                $("#2").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[3] == tableValues[4] && tableValues[3] == tableValues[5] && tableValues[3] != null) {
+                $("#3").css({"background-color": "#464444"});
+                $("#4").css({"background-color": "#464444"});
+                $("#5").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[6] == tableValues[7] && tableValues[6] == tableValues[8] && tableValues[6] != null) {
+                $("#6").css({"background-color": "#464444"});
+                $("#7").css({"background-color": "#464444"});
+                $("#8").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[0] == tableValues[3] && tableValues[0] == tableValues[6] && tableValues[0] != null) {
+                $("#0").css({"background-color": "#464444"});
+                $("#3").css({"background-color": "#464444"});
+                $("#6").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[1] == tableValues[4] && tableValues[1] == tableValues[7] && tableValues[1] != null) {
+                $("#1").css({"background-color": "#464444"});
+                $("#4").css({"background-color": "#464444"});
+                $("#7").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[2] == tableValues[5] && tableValues[2] == tableValues[8] && tableValues[2] != null) {
+                $("#2").css({"background-color": "#464444"});
+                $("#5").css({"background-color": "#464444"});
+                $("#8").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[0] == tableValues[4] && tableValues[0] == tableValues[8] && tableValues[0] != null) {
+                $("#0").css({"background-color": "#464444"});
+                $("#4").css({"background-color": "#464444"});
+                $("#8").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[2] == tableValues[4] && tableValues[2] == tableValues[6] && tableValues[2] != null) {
+                $("#2").css({"background-color": "#464444"});
+                $("#4").css({"background-color": "#464444"});
+                $("#6").css({"background-color": "#464444"});
+                gameOver = true;
+            }
+            else if (tableValues[0] != null && tableValues[1] != null && tableValues[2] != null &&
+                    tableValues[3] != null && tableValues[4] != null && tableValues[5] != null &&
+                    tableValues[6] != null && tableValues[7] != null && tableValues[8] != null) {
+                winner = "Draw";
+                gameOver = true;
+            }
+            if (gameOver == true) {
+                if (winner == "Draw") {
+                    $("p").append("Draw");
+                }
+                else {
+                    if (xNext == true) {
+                        winner = "Noughts";
+                    } else {
+                        winner = "Crosses";
+                    }
+                    $("p").append(winner + " win");
+                }
+                $("div").show();
+            }
+        }
+    });
+    $("th").mouseover(function(){
+        if (gameOver == false) {
+            $(this).css({"background-color": "#737373"});
+        }
+    });
+    $("th").mouseout(function(){
+        if ($(this).text() == "") {
+            $(this).css({"background-color": "#858585"});
+        }
+    });
+    $("div").mouseover(function(){
+        $(this).css({"background-color": "#075f24"});
+    });
+    $("div").mouseout(function(){
+        $(this).css({"background-color": "#0ca73f"});
+    });
+    $("div").click(function(){
+        $(this).hide();
+        $("p").text("");
+        $("th").text("");
+        $("th").css({"background-color": "#858585"});
+        tableValues[0] = null;
+        tableValues[1] = null;
+        tableValues[2] = null;
+        tableValues[3] = null;
+        tableValues[4] = null;
+        tableValues[5] = null;
+        tableValues[6] = null;
+        tableValues[7] = null;
+        tableValues[8] = null;
+        gameOver = false;
+        xNext = true;
+        winner = "";
+    });
+});
+</script>
+
+</head>
+<body>
+<h2>Noughts and Crosses</h2>
+<table>
+    <tr>
+    <th id = "0"></th>
+    <th id = "1"></th>
+    <th id = "2"></th>
+    </tr>
+    <tr>
+    <th id = "3"></th>
+    <th id = "4"></th>
+    <th id = "5"></th>
+    </tr>
+    <tr>
+    <th id = "6"></th>
+    <th id = "7"></th>
+    <th id = "8"></th>
+    </tr>
+</table>
+<p></p>
+<div>Rematch</div>
+</body>
+</html>
