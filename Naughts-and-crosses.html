@@ -4,9 +4,12 @@
 <title>Naughts and Crosses</title>
 <link rel="icon" href="Icon.png" type="image/png">
 <style>
-    table, th, td {
+    table, th {
         border: 1px solid #8a8a8a;
         text-align: center;
+    }
+    th {
+        cursor: pointer;
     }
     table {
         margin-top: 75px;
@@ -41,6 +44,7 @@
         font-family: "Lucida Console", monospace;
         background-color: #0ca73f;
         color: #232423;
+        cursor: pointer;
         margin-left: 900px;
         margin-right: 900px;
         padding-top: 10px;
@@ -62,10 +66,12 @@ $(document).ready(function(){
             if (xNext == true) {
                 tableValues[parseInt($(this).attr("id"))] = "X";
                 $(this).text("X");
+                $(this).css("cursor", "default");
                 xNext = false;
             } else {
                 tableValues[parseInt($(this).attr("id"))] = "O";
                 $(this).text("O");
+                $(this).css("cursor", "default");
                 xNext = true;
             }
             if (tableValues[0] == tableValues[1] && tableValues[0] == tableValues[2] && tableValues[0] != null) {
@@ -123,6 +129,7 @@ $(document).ready(function(){
                 gameOver = true;
             }
             if (gameOver == true) {
+                $("th").css("cursor", "default");
                 if (winner == "Draw") {
                     $("p").append("Draw");
                 }
@@ -159,6 +166,7 @@ $(document).ready(function(){
         $("p").text("");
         $("th").text("");
         $("th").css({"background-color": "#858585"});
+        $("th").css("cursor", "pointer");
         tableValues[0] = null;
         tableValues[1] = null;
         tableValues[2] = null;
